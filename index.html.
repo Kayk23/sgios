@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SG.iOs | Painéis Game</title>
+    <style>
+        body { background-color: #0a0a0a; color: #fff; font-family: sans-serif; text-align: center; margin: 0; }
+        header { padding: 40px; border-bottom: 2px solid #00ffcc; }
+        .logo { font-size: 2.5rem; color: #00ffcc; font-weight: bold; text-shadow: 0 0 10px #00ffcc; }
+        .card { background: #151515; border: 1px solid #333; border-radius: 15px; padding: 25px; margin: 20px auto; width: 80%; max-width: 300px; }
+        .price { font-size: 2rem; color: #00ffcc; margin: 15px 0; }
+        .btn { background: #00ffcc; color: #000; padding: 15px; text-decoration: none; font-weight: bold; border-radius: 8px; display: block; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SG.iOs</div>
+        <p>Painéis Hacker Premium - 100% Seguro</p>
+    </header>
+    <div class="card">
+        <h3>PAINEL VIP FF</h3>
+        <p>Aimbot + HS + Fly</p>
+        <div class="price">R$ 49,90</div>
+        <a href="https://wa.me/55SEUNUMERO" class="btn">COMPRAR VIA WHATSAPP</a>
+    </div>
+</body>
+</html>
