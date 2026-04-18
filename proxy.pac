@@ -1,37 +1,18 @@
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    const host = request.headers.get('Host');
-
-    // 1. O ALVO: Intercepta a configuração de física e mira da Unity
-    if (host === 'config.uca.cloud.unity3d.com') {
-      const fullCapaConfig = {
-        "analytics": { "enabled": true },
-        "connect": { "enabled": true },
-        "performance": { 
-          "enabled": true, 
-          "headshot_scale": 8.5,    // Valor máximo para puxar só na cabeça
-          "hitbox_scale": 5.0       // Aumenta o tamanho do alvo da mira
-        },
-        "dynamic": {
-          "analytics": { 
-            "head_aim_assist": 3.0, 
-            "aim_lock": "head_only", 
-            "neck_hit_priority": false // Desliga o pescoço pra focar só no topo
-          }
-        }
-      };
-      return new Response(JSON.stringify(fullCapaConfig), {
-        headers: { 'content-type': 'application/json' }
-      });
+function FindProxyForURL(url, host) {
+    // 1. ALVO PRINCIPAL: Intercepta a configuração de física/mira da Unity
+    if (shExpMatch(host, "config.uca.cloud.unity3d.com")) {
+        // Aqui ele manda para o seu servidor que está com os valores de Full Capa
+        return "PROXY net-vip-loirin.kayk23.workers.dev:80";
     }
 
-    // 2. ANTI-CHEAT: Bloqueia envio de logs de detecção
-    if (host.includes('log') || host.includes('analytics') || host.includes('crashlytics')) {
-      return new Response(null, { status: 403 });
+    // 2. BLOQUEIO ANTI-CHEAT: Faz a Garena "falar sozinha" e não enviar logs
+    if (shExpMatch(host, "*.garena.com") || 
+        shExpMatch(host, "*log*") || 
+        shExpMatch(host, "*analytics*") || 
+        shExpMatch(host, "*crashlytics*")) {
+        return "PROXY 127.0.0.1:80";
     }
 
-    // 3. SEGURANÇA: Mantém o seu servidor online para o resto das requisições
-    return fetch(request);
-  },
-};
+    // 3. O resto da internet do seu cliente passa normal (sem lag)
+    return "DIRECT";
+}
